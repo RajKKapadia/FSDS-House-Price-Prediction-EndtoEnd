@@ -1,7 +1,6 @@
 # iNeuron FSDS - Nov - 2021, House Price Prediction
 
 ## Software and accounts
----
 
 1. [Github](https://github.com/)
 2. [Heroku](https://www.heroku.com/)
@@ -12,7 +11,6 @@
 4. [GIT Client](https://git-scm.com/downloads)
 
 ## Environment
----
 
 You can use either `conda` or `venv` to create a new virtual environment to avoid any package dependency issues. You can use any from the following commands to do so...
 
@@ -29,3 +27,5 @@ You can use either `conda` or `venv` to create a new virtual environment to avoi
 ```
 
 Activate the virtual environment before moving forward.
+
+## Run the application
