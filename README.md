@@ -28,4 +28,10 @@ You can use either `conda` or `venv` to create a new virtual environment to avoi
 
 Activate the virtual environment before moving forward.
 
-## Run the application
+## Installation
+
+Install all the required packages using
+
+```python
+    pip install -r requirements.txt
+```
