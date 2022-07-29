@@ -2,7 +2,8 @@ import os
 
 from flask import Flask, send_from_directory
 
-from house_price.logger import logging
+import logging
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
@@ -16,5 +17,5 @@ def favicon():
 
 @app.route('/')
 def home():
-    logging.info('Home route called.')
+    logger.info('Home route called.')
     return 'Machine learning project.'

@@ -2,15 +2,17 @@ import logging
 from datetime import datetime
 import os
 
-LOG_DIR = 'app_logs'
+from house_price import constant
 
-TIMESTAMP = f'{datetime.now().strftime("%H-%M_%Y-%m-%d")}'
+LOG_DIR_PATH = constant.LOG_DIR_PATH
+
+os.makedirs(LOG_DIR_PATH, exist_ok=True)
+
+TIMESTAMP = constant.CURRENT_TIMESTAMP
 
 FILE_NAME = f'logs_{TIMESTAMP}.log'
 
-os.makedirs(LOG_DIR, exist_ok=True)
-
-FILE_PATH = os.path.join(LOG_DIR, FILE_NAME)
+FILE_PATH = os.path.join(LOG_DIR_PATH, FILE_NAME)
 
 logging.basicConfig(
     filename=FILE_PATH,
