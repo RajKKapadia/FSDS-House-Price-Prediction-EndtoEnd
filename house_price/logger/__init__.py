@@ -5,7 +5,6 @@ import os
 from house_price import constant
 
 LOG_DIR_PATH = constant.LOG_DIR_PATH
-
 os.makedirs(LOG_DIR_PATH, exist_ok=True)
 
 TIMESTAMP = constant.CURRENT_TIMESTAMP

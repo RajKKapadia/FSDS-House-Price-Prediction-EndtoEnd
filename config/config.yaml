@@ -5,20 +5,24 @@ data_ingestion_config:
   ingested_dir: ingested_data
   train_data_dir: train
   test_data_dir: test
+  train_data_file_name: train.csv
+  test_data_file_name: test.csv
 
 data_validation_config:
   schema_file_path: config
   schema_file_name: schema.yaml
-  report_file_name: report.json
-  report_page_file_name: report.html
+  report_file_path: report.json
+  report_page_file_path: report.html
 
 data_transformation_config:
-  add_bedroom_per_room: true
+  add_bedroom_per_room: True
   transformed_dir: transformed_data
   transformed_train_dir: train
   transformed_test_dir: test
-  processed_data_path: preprocessed
-  preprocessed_object_file_name: preprocessed.pkl
+  transformed_train_file_name: train.npy
+  transformed_test_file_name: test.npy
+  processed_object_dir: preprocessed
+  processed_object_file_name: preprocessed.pkl
 
 model_trainer_config:
   trained_model_file_path: trained_model
@@ -32,7 +36,3 @@ model_evaluation_config:
   
 model_pusher_config:
   model_export_dir_path: saved_models
-
-training_pipeline_config:
-  pipeline_name: house_price_prediction
-  artifact_dir: artifact

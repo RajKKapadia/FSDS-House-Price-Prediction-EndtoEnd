@@ -1,11 +1,11 @@
 import os
 import traceback
-import logging
-logger = logging.getLogger(__name__)
 
 from house_price.entity.entity_config import DataIngestionConfig, DataTransformationConfig, DataValidationConfig, ModelEvaluationConfig, ModelTrainingConfig, PushModelConfig
 from house_price.util import util
 from house_price import constant
+from house_price.logger import logging
+logger = logging.getLogger(__name__)
 
 class Configuration:
 
@@ -48,22 +48,90 @@ class Configuration:
             ingested_dir,
             data_ingestion_config['test_data_dir']
         )
+        train_data_file_name = data_ingestion_config['train_data_file_name']
+        test_data_file_name = data_ingestion_config['test_data_file_name']
         data_ingestion_config = DataIngestionConfig(
             dataset_download_url=dataset_download_url,
             raw_data_path=raw_data_path,
             downloaded_zip_file_path=downloaded_zip_file_path,
             ingested_dir=ingested_dir,
             train_data_dir=train_data_dir,
-            test_data_dir=test_data_dir
+            train_data_file_name=train_data_file_name,
+            test_data_dir=test_data_dir,
+            test_data_file_name=test_data_file_name
         )
         
         return data_ingestion_config
 
     def get_data_validation_config(self) -> DataValidationConfig:
-        pass
+        data_validation_config = self.config_info[constant.DATA_VALIDATION_CONFIG_KEY]
+        data_validation_base_path = os.path.join(
+            constant.ARTIFACT_DIR_PATH,
+            constant.DATA_VALIDATION_DIR,
+            self.current_timestamp
+        )
+        schema_file_name = data_validation_config['schema_file_name']
+        schema_file_path = os.path.join(
+            constant.ROOT_DIR,
+            data_validation_config['schema_file_path'],
+            schema_file_name
+        )
+        report_file_path = os.path.join(
+            data_validation_base_path,
+            data_validation_config['report_file_path']
+        )
+        report_page_file_path = os.path.join(
+            data_validation_base_path,
+            data_validation_config['report_page_file_path']
+        )
+        data_validation_config = DataValidationConfig(
+            schema_file_name=schema_file_name,
+            schema_file_path=schema_file_path,
+            report_file_path=report_file_path,
+            report_page_file_path=report_page_file_path
+        )
+
+        return data_validation_config
 
     def get_data_transformation_config(self) -> DataTransformationConfig:
-        pass
+        data_transformation_config = self.config_info[constant.DATA_TRANSFORMATION_CONFIG_KEY]
+        data_transformation_base_path = os.path.join(
+            constant.ARTIFACT_DIR_PATH,
+            constant.DATA_TRANSFORMATION_DIR,
+            self.current_timestamp
+        )
+        add_bedroom_per_room = data_transformation_config['add_bedroom_per_room']
+        processed_object_dir = os.path.join(
+            data_transformation_base_path,
+            data_transformation_config['processed_object_dir']
+        )
+        transformed_dir = os.path.join(
+            data_transformation_base_path,
+            data_transformation_config['transformed_dir']
+        )
+        transformed_test_dir = os.path.join(
+            transformed_dir,
+            data_transformation_config['transformed_test_dir']
+        )
+        transformed_train_dir = os.path.join(
+            transformed_dir,
+            data_transformation_config['transformed_train_dir']
+        )
+        processed_object_file_name = data_transformation_config['processed_object_file_name']
+        transformed_train_file_name = data_transformation_config['transformed_train_file_name']
+        transformed_test_file_name = data_transformation_config['transformed_test_file_name']
+        data_transformation_config = DataTransformationConfig(
+            add_bedroom_per_room=add_bedroom_per_room,
+            processed_object_dir=processed_object_dir,
+            processed_object_file_name=processed_object_file_name,
+            transformed_dir=transformed_dir,
+            transformed_test_dir=transformed_test_dir,
+            transformed_test_file_name=transformed_test_file_name,
+            transformed_train_dir=transformed_train_dir,
+            transformed_train_file_name=transformed_train_file_name
+        )
+
+        return data_transformation_config
 
     def get_model_training_config(Self) -> ModelTrainingConfig:
         pass

@@ -7,8 +7,10 @@ DataIngestionConfig = namedtuple(
         'downloaded_zip_file_path',
         'raw_data_path',
         'ingested_dir',
-        'train_data_dir', 
-        'test_data_dir'
+        'train_data_dir',
+        'train_data_file_name',
+        'test_data_dir',
+        'test_data_file_name'
     ]
 )
 
@@ -17,8 +19,8 @@ DataValidationConfig = namedtuple(
     [
         'schema_file_path',
         'schema_file_name',
-        'report_file_name',
-        'report_page_file_name'
+        'report_file_path',
+        'report_page_file_path'
     ]
 )
 
@@ -28,9 +30,11 @@ DataTransformationConfig = namedtuple(
         'add_bedroom_per_room',
         'transformed_dir',
         'transformed_train_dir',
+        'transformed_train_file_name',
+        'transformed_test_file_name',
         'transformed_test_dir',
-        'processed_data_path',
-        'preprocessed_object_file_name'
+        'processed_object_dir',
+        'processed_object_file_name'
     ]
 )
 

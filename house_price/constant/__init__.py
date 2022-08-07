@@ -18,3 +18,9 @@ ARTIFACT_DIR_PATH = os.path.join(ROOT_DIR, DATASET_DIR, ARTIFACT_DIR)
 
 DATA_INGESTION_CONFIG_KEY = 'data_ingestion_config'
 DATA_INGESTION_DIR = 'data_ingestion'
+
+DATA_VALIDATION_CONFIG_KEY = 'data_validation_config'
+DATA_VALIDATION_DIR = 'data_validation'
+
+DATA_TRANSFORMATION_CONFIG_KEY = 'data_transformation_config'
+DATA_TRANSFORMATION_DIR = 'data_transformation'
