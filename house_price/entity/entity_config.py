@@ -41,8 +41,8 @@ DataTransformationConfig = namedtuple(
 ModelTrainingConfig = namedtuple(
     'ModelTrainingConfig',
     [
-        'trained_model_file_path',
-        'model_file_name',
+        'trained_model_dir',
+        'trained_model_file_name',
         'base_accuracy',
         'model_config_dir',
         'model_config_file_name'

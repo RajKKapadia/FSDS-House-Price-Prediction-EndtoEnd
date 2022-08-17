@@ -152,8 +152,8 @@ class DataValidation:
                 logger.error('The data is not validate.')
                 raise Exception('The data is not validated.')
             if is_data_drift:
-                logger.error('There is data drift.')
-                raise Exception('There is data drift.')
+                logger.error('There is a data drift.')
+                raise Exception('There is a data drift.')
             data_validation_artifacts = DataValidationArtifacts(
                 schema_file_path=schema_file_path,
                 report_file_path=report_file_path,

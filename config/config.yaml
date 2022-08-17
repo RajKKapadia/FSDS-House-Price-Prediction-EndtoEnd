@@ -21,13 +21,13 @@ data_transformation_config:
   transformed_test_dir: test
   transformed_train_file_name: train.npy
   transformed_test_file_name: test.npy
-  processed_object_dir: preprocessed
-  processed_object_file_name: preprocessed.pkl
+  processed_object_dir: preprocessing_object
+  processed_object_file_name: preprocessing_object.pkl
 
-model_trainer_config:
-  trained_model_file_path: trained_model
-  model_file_name: model.pkl
-  base_accuracy: 0.8
+model_training_config:
+  trained_model_dir: trained_model
+  trained_model_file_name: model.pkl
+  base_accuracy: 0.6
   model_config_dir: config
   model_config_file_name: model.yaml
 

@@ -24,3 +24,6 @@ DATA_VALIDATION_DIR = 'data_validation'
 
 DATA_TRANSFORMATION_CONFIG_KEY = 'data_transformation_config'
 DATA_TRANSFORMATION_DIR = 'data_transformation'
+
+MODEL_TRAINING_CONFIG_KEY = 'model_training_config'
+MODEL_TRIAINNG_DIR = 'model_training'

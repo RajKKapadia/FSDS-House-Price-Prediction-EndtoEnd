@@ -133,8 +133,30 @@ class Configuration:
 
         return data_transformation_config
 
-    def get_model_training_config(Self) -> ModelTrainingConfig:
-        pass
+    def get_model_training_config(self) -> ModelTrainingConfig:
+        model_training_config = self.config_info[constant.MODEL_TRAINING_CONFIG_KEY]
+        model_training_base_path = os.path.join(
+            constant.ARTIFACT_DIR_PATH,
+            constant.MODEL_TRIAINNG_DIR,
+            constant.CURRENT_TIMESTAMP
+        )
+        trained_model_dir = os.path.join(
+            model_training_base_path,
+            model_training_config['trained_model_dir']
+        )
+        trained_model_file_name = model_training_config['trained_model_file_name']
+        base_accuracy = model_training_config['base_accuracy']
+        model_config_dir = model_training_config['model_config_dir']
+        model_config_file_name = model_training_config['model_config_file_name']
+        model_training_config = ModelTrainingConfig(
+            trained_model_dir=trained_model_dir,
+            trained_model_file_name=trained_model_file_name,
+            base_accuracy=base_accuracy,
+            model_config_dir=model_config_dir,
+            model_config_file_name=model_config_file_name
+        )
+
+        return model_training_config
 
     def get_model_evaluation_config(self) -> ModelEvaluationConfig:
         pass

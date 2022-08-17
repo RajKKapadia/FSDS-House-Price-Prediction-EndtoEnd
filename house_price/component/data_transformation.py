@@ -13,7 +13,6 @@ import numpy as np
 from house_price.entity.entity_config import DataTransformationConfig
 from house_price.entity.artifact_config import DataIngestionArtifacts, DataValidationArtifacts, DataTransformationArtifacts
 from house_price.exception import HousePricePredictionException
-from house_price import constant
 from house_price.util import util
 from house_price.logger import logging
 logger = logging.getLogger(__name__)

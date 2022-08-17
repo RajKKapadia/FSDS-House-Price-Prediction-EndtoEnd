@@ -31,3 +31,17 @@ DataTransformationArtifacts = namedtuple(
         'message'
     ]
 )
+
+ModelTrainingArtifacts = namedtuple(
+    'ModelTrainingArtifacts',
+    [
+        'is_trained',
+        'message',
+        'trained_model_file_path',
+        'train_accuracy',
+        'test_accuracy',
+        'train_rsme',
+        'test_rsme',
+        'model_accuracy'
+    ]
+)
