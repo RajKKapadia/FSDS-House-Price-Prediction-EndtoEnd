@@ -55,11 +55,13 @@ class ModelTrainer:
             X_train=X_train,
             y_train=y_train,
             X_test=X_test,
-            y_test=y_test
+            y_test=y_test,
+            base_accuracy=self.model_training_config.base_accuracy
         )
         if best_model == None:
             logger.info('No best model found.')
-        logger.info('Saving the best model.')
+            return None
+        logger.info(f'Saving the best model {best_model.model_name}')
         trained_model_dir = os.path.join(
             constant.ARTIFACT_DIR_PATH,
             constant.CURRENT_TIMESTAMP,

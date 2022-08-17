@@ -26,7 +26,7 @@ InitializedModelDetails = namedtuple(
 GridSearchedBestModel = namedtuple(
     'GridSearchedBestModel',
     [
-        'model',
+        'initialized_model',
         'model_name',
         'model_serial_number',
         'best_searched_model',
@@ -100,6 +100,8 @@ class ModelFactory:
             index = 0
             metric_info_artifacts = None
             for model in models:
+                logger.info(f'Model number - {index + 1}')
+                logger.info(f'Model name - {str(model)}')
                 y_train_prediction = model.predict(X_train)
                 y_test_prediction = model.predict(X_test)
                 train_accuracy = r2_score(y_train, y_train_prediction)
@@ -108,7 +110,13 @@ class ModelFactory:
                 test_rsme = np.sqrt(mean_squared_error(y_test, y_test_prediction))
                 model_accuracy = (2 * (train_accuracy * test_accuracy)) / (train_accuracy + test_accuracy)
                 accuracy_difference = abs(test_accuracy - train_accuracy)
-                if model_accuracy > base_accuracy and accuracy_difference < 0.05:
+                logger.info(f'Model train accuracy - {round(train_accuracy, 4)}')
+                logger.info(f'Model test accuracy - {round(test_accuracy, 4)}')
+                logger.info(f'Model train RSME - {round(train_rsme, 4)}')
+                logger.info(f'Model test RSME - {round(test_rsme, 4)}')
+                logger.info(f'Model accuracy - {round(model_accuracy, 4)}')
+                logger.info(f'Accuracy difference - {round(accuracy_difference, 4)}')
+                if model_accuracy > base_accuracy and accuracy_difference < 0.15:
                     metric_info_artifacts = MetricInfoArtifacts(
                         model_accuracy=model_accuracy,
                         model_name=str(model),
@@ -119,9 +127,10 @@ class ModelFactory:
                         test_rsme=test_rsme,
                         train_rsme=train_rsme
                     )
+                    base_accuracy = model_accuracy
                 index += 1
             if metric_info_artifacts is None:
-                pass
+                logger.info('No model found with better accuracy.')
             return metric_info_artifacts
         except Exception as e:
                 logger.exception(f'Uncaught exception - {traceback.format_exc()}')
@@ -138,20 +147,26 @@ class ModelFactory:
                 )
                 if 'params' in module_config:
                     parameters = module_config['params']
-                    model = self.update_property_of_class(
+                    model_object = self.update_property_of_class(
                         instance_reference=model_object,
                         property_data=parameters
                     )
-
+                    model = model_object()
+                else:
+                    model = model_object()
+                if 'grid_search_params' in module_config:
+                    grid_search_parameters = module_config['grid_search_params']
+                else:
+                    grid_search_parameters = None
                 models.append(
                     InitializedModelDetails(
-                        model=model(),
+                        model=model,
                         model_name=f'{module_config["class"]}',
                         model_serial_number=module,
-                        grid_search_parameters=module_config['grid_search_params']
+                        grid_search_parameters=grid_search_parameters
                     )
                 )
-            
+
             return models
         except Exception as e:
             logger.exception(f'Uncaught exception - {traceback.format_exc()}')
@@ -159,6 +174,21 @@ class ModelFactory:
 
     def grid_search(self, initialized_model: InitializedModelDetails, X: np.ndarray, y: np.ndarray) -> GridSearchedBestModel:
         try:
+            if initialized_model.grid_search_parameters == None:
+                logger.info('No parameters set for grid search.')
+                logger.info(f'Skipping grid search for {initialized_model.model_name}')
+                model = initialized_model.model
+                model.fit(X, y)
+                grid_searched_best_model = GridSearchedBestModel(
+                    initialized_model=initialized_model.model,
+                    model_serial_number=initialized_model.model_serial_number,
+                    model_name=initialized_model.model_name,
+                    best_searched_model=model,
+                    best_model_parameters=None,
+                    best_model_score=None
+                )
+                return grid_searched_best_model
+            logger.info(f'Started grid search for {initialized_model.model_name}')
             grid_search_object = self.get_class_reference(
                 module_name=self.model_config['grid_search']['module'],
                 class_name=self.model_config['grid_search']['class']
@@ -173,7 +203,7 @@ class ModelFactory:
             )
             grid_search.fit(X, y)
             grid_searched_best_model = GridSearchedBestModel(
-                model=initialized_model.model,
+                initialized_model=initialized_model.model,
                 model_serial_number=initialized_model.model_serial_number,
                 model_name=initialized_model.model_name,
                 best_searched_model=grid_search.best_estimator_,
@@ -181,6 +211,8 @@ class ModelFactory:
                 best_model_score=grid_search.best_score_
             )
 
+            logger.info(f'Finished grid search for {initialized_model.model_name}')
+            logger.info(f'Best parameters - {grid_search.best_params_}')
             return grid_searched_best_model
         except Exception as e:
             logger.exception(f'Uncaught exception - {traceback.format_exc()}')

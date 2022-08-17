@@ -1,3 +1,4 @@
+from asyncio.log import logger
 from house_price.config.configuration import Configuration
 from house_price.entity.artifact_config import DataIngestionArtifacts, DataTransformationArtifacts, DataValidationArtifacts, ModelTrainingArtifacts
 from house_price.component.data_ingestion import DataIngestion
@@ -60,5 +61,6 @@ class Pipeline:
         model_training_artifact = self.start_model_training(
             data_transformation_artifacts=data_transformation_artifacts
         )
-        print(model_training_artifact)
+        if model_training_artifact == None:
+            print('No model found with better accuracy, please reduce the base accuracy.')
     
