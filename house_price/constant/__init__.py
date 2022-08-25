@@ -27,3 +27,6 @@ DATA_TRANSFORMATION_DIR = 'data_transformation'
 
 MODEL_TRAINING_CONFIG_KEY = 'model_training_config'
 MODEL_TRIAINNG_DIR = 'model_training'
+
+MODEL_EVALUATION_CONFIG_KEY = 'model_evaluation_config'
+MODEL_EVALUATION_DIR = 'model_evaluation'

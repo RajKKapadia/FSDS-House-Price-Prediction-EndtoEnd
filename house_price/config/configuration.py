@@ -159,7 +159,23 @@ class Configuration:
         return model_training_config
 
     def get_model_evaluation_config(self) -> ModelEvaluationConfig:
-        pass
+        model_evaluation_config = self.config_info[constant.MODEL_EVALUATION_CONFIG_KEY]
+        model_evaluation_base_path = os.path.join(
+            constant.ARTIFACT_DIR_PATH,
+            constant.MODEL_EVALUATION_DIR,
+            constant.CURRENT_TIMESTAMP
+        )
+        model_evaluation_file_name = model_evaluation_config['model_evaluation_file_name']
+        model_evaluation_file_path = os.path.join(
+            model_evaluation_base_path,
+            model_evaluation_file_name
+        )
+        model_evaluation_config = ModelEvaluationConfig(
+            model_evaluation_file_path=model_evaluation_file_path,
+            time_stamp=constant.CURRENT_TIMESTAMP
+        )
+
+        return model_evaluation_config
 
     def get_push_model_config(self) -> PushModelConfig:
         pass

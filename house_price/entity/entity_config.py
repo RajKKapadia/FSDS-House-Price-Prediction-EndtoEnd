@@ -59,5 +59,7 @@ ModelEvaluationConfig = namedtuple(
 
 PushModelConfig = namedtuple(
     'PushModelConfig',
-    ['model_export_dir_path']
+    [
+        'model_export_dir'
+    ]
 )
